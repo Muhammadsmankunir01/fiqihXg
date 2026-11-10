@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran Interaktif PAI & Budi Pekerti Kelas X - MS GPAI SMANSAKU</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399',
+                            500: '#10b981', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b',
+                        },
+                        amber: {
+                            400: '#fbbf24', 500: '#f59e0b', 600: '#d97706',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        arabic: ['Amiri', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        /* Custom Styles & Protection Features */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; /* Anti Copy */
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .dark .glass-nav {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        /* Watermark Protection Effect for Anti-Screenshot overlay */
+        .anti-screenshot-overlay {
+            position: relative;
+        }
+
+        .anti-screenshot-overlay::after {
+            content: "MS GPAI SMANSAKU - HAK CIPTA DILINDUNGI";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: rgba(16, 185, 129, 0.08);
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        /* Watermark Pattern */
+        .watermark-bg {
+            background-image: repeating-linear-gradient(
+                -45deg,
+                rgba(0, 0, 0, 0.02),
+                rgba(0, 0, 0, 0.02) 15px,
+                transparent 15px,
+                transparent 30px
+            );
+        }
+
+        .dark .watermark-bg {
+            background-image: repeating-linear-gradient(
+                -45deg,
+                rgba(255, 255, 255, 0.02),
+                rgba(255, 255, 255, 0.02) 15px,
+                transparent 15px,
+                transparent 30px
+            );
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 9999px;
+        }
+
+        /* Drag & Drop Styling for Game */
+        .draggable-item {
+            cursor: grab;
+            transition: all 0.2s ease;
+        }
+        .draggable-item:active {
+            cursor: grabbing;
+            transform: scale(1.02);
+        }
+        .drag-over {
+            border: 2px dashed #10b981 !important;
+            background-color: rgba(16, 185, 129, 0.1) !important;
+        }
+
+        @media print {
+            body {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- Anti-Screenshot Blur Overlay when Window Loses Focus -->
+    <div id="blur-protection-overlay" class="fixed inset-0 bg-slate-950/90 backdrop-blur-xl z-50 hidden flex-col items-center justify-center text-center p-6 text-white">
+        <i class="fa-solid fa-user-shield text-6xl text-emerald-400 mb-4 animate-bounce"></i>
+        <h2 class="text-2xl font-bold mb-2">Konten Dilindungi!</h2>
+        <p class="text-slate-300 max-w-md">Silakan kembali fokus ke jendela aplikasi untuk melanjutkan pembelajaran. Tangkapan layar dan penyalinan konten dilarang.</p>
+    </div>
+
+    <!-- Top Global Progress Bar -->
+    <div class="fixed top-0 left-0 w-full h-1.5 bg-slate-200 dark:bg-slate-800 z-50">
+        <div id="global-progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 w-0 transition-all duration-500"></div>
+    </div>
+
+    <!-- LOGIN MODAL / SCREEN -->
+    <div id="login-modal" class="fixed inset-0 z-40 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md">
+        <div class="glass-card w-full max-w-md p-8 rounded-2xl shadow-2xl border border-emerald-500/20 text-center relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-36 h-36 bg-emerald-500/20 rounded-full blur-2xl"></div>
+            <div class="absolute -bottom-12 -left-12 w-36 h-36 bg-teal-500/20 rounded-full blur-2xl"></div>
+
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 text-white shadow-lg mb-4">
+                <i class="fa-solid fa-book-quran text-3xl"></i>
+            </div>
+            
+            <h1 class="text-2xl font-extrabold text-slate-800 dark:text-white tracking-tight">MEDIA PEMBELAJARAN PAI</h1>
+            <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 tracking-widest uppercase mt-1">MS GPAI SMANSAKU • Kelas X Ganjil</p>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 mb-6">Materi: Sumber Hukum Islam</p>
+
+            <form id="login-form" class="space-y-4 text-left" onsubmit="handleLogin(event)">
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">Nama Lengkap Siswa</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-user absolute left-3 top-3 text-slate-400"></i>
+                        <input type="text" id="login-name" required placeholder="Masukkan nama lengkap" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500 outline-none transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">Sekolah Asal</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-school absolute left-3 top-3 text-slate-400"></i>
+                        <input type="text" id="login-school" required placeholder="Contoh: SMAN 1 KABUPATEN" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500 outline-none transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">PIN Akses (Default: 123456)</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-key absolute left-3 top-3 text-slate-400"></i>
+                        <input type="password" id="login-pin" required maxlength="6" placeholder="******" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500 outline-none transition">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/25 transition transform active:scale-95 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket"></i> Masuk Aplikasi
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN APP STRUCTURE -->
+    <div id="main-app" class="flex-1 flex flex-col hidden min-h-screen">
+        
+        <!-- HEADER -->
+        <header class="sticky top-0 z-30 glass-nav border-b border-slate-200 dark:border-slate-800 transition-colors">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                
+                <!-- Left Header: Toggle Sidebar & Logo -->
+                <div class="flex items-center gap-3">
+                    <button id="toggle-sidebar-btn" onclick="toggleSidebar()" class="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 focus:outline-none transition">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center shadow-md font-bold">
+                            <i class="fa-solid fa-book-quran"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-sm font-bold text-slate-800 dark:text-white leading-tight">PAI & Budi Pekerti X</h1>
+                            <p class="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 tracking-wider">MS GPAI SMANSAKU</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Header: Dark Mode, Student Badge, Logout -->
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <!-- Dark/Light Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition" title="Ganti Tema">
+                        <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
+                    </button>
+
+                    <!-- Student Info Pills -->
+                    <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                        <div class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-bold" id="user-initials">S</div>
+                        <span id="user-display-name" class="text-xs font-medium text-slate-700 dark:text-slate-200 truncate max-w-[120px]">Siswa</span>
+                    </div>
+
+                    <!-- Logout Button -->
+                    <button onclick="handleLogout()" class="p-2 rounded-xl text-rose-500 hover:bg-rose-500/10 transition flex items-center gap-1.5 text-xs font-medium" title="Keluar dari Aplikasi">
+                        <i class="fa-solid fa-right-from-bracket text-base"></i>
+                        <span class="hidden md:inline">Keluar</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- LAYOUT CONTENT CONTAINER -->
+        <div class="flex-1 max-w-7xl w-full mx-auto flex overflow-hidden">
+            
+            <!-- SIDEBAR NAVIGATION -->
+            <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-30 w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col justify-between pt-16 md:pt-0">
+                <div class="p-4 overflow-y-auto space-y-1">
+                    <div class="px-3 py-2 text-[11px] font-bold tracking-wider text-slate-400 dark:text-slate-500 uppercase">Navigasi Utama</div>
+                    
+                    <button onclick="navigateTo('beranda')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50" data-page="beranda">
+                        <i class="fa-solid fa-house w-5 text-center"></i> Beranda
+                    </button>
+                    <button onclick="navigateTo('petunjuk')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-page="petunjuk">
+                        <i class="fa-solid fa-circle-info w-5 text-center"></i> Petunjuk
+                    </button>
+                    <button onclick="navigateTo('materi')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-page="materi">
+                        <i class="fa-solid fa-book-open-reader w-5 text-center"></i> Materi Interaktif
+                    </button>
+                    <button onclick="navigateTo('game')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-page="game">
+                        <i class="fa-solid fa-gamepad w-5 text-center"></i> Game Susun Urutan
+                    </button>
+                    <button onclick="navigateTo('latihan')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-page="latihan">
+                        <i class="fa-solid fa-pen-to-square w-5 text-center"></i> Latihan Soal
+                    </button>
+                    <button onclick="navigateTo('evaluasi')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-page="evaluasi">
+                        <i class="fa-solid fa-clipboard-check w-5 text-center"></i> Evaluasi Akhir
+                    </button>
+
+                    <div class="pt-4 px-3 py-2 text-[11px] font-bold tracking-wider text-slate-400 dark:text-slate-500 uppercase">Informasi</div>
+
+                    <button onclick="navigateTo('ringkasan')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-page="ringkasan">
+                        <i class="fa-solid fa-file-contract w-5 text-center"></i> Ringkasan Materi
+                    </button>
+                    <button onclick="navigateTo('referensi')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-page="referensi">
+                        <i class="fa-solid fa-bookmark w-5 text-center"></i> Referensi & Glosarium
+                    </button>
+                    <button onclick="navigateTo('profil')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-page="profil">
+                        <i class="fa-solid fa-user-graduate w-5 text-center"></i> Profil Penyusun
+                    </button>
+                </div>
+
+                <!-- Sidebar Footer Status -->
+                <div class="p-4 border-t border-slate-200 dark:border-slate-800">
+                    <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/60 text-xs text-slate-500 dark:text-slate-400 space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span>Status Sesi:</span>
+                            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        </div>
+                        <p class="font-semibold text-slate-700 dark:text-slate-200 truncate" id="sidebar-school-name">-</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- SIDEBAR OVERLAY FOR MOBILE -->
+            <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-20 hidden md:hidden"></div>
+
+            <!-- MAIN CONTENT AREA -->
+            <main class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto w-full min-w-0 anti-screenshot-overlay watermark-bg">
+                
+                <!-- BREADCRUMB -->
+                <nav class="flex items-center text-xs text-slate-500 dark:text-slate-400 mb-6 font-medium">
+                    <span class="hover:underline cursor-pointer" onclick="navigateTo('beranda')">Beranda</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] mx-2"></i>
+                    <span id="breadcrumb-active" class="text-emerald-600 dark:text-emerald-400 font-semibold capitalize">Beranda</span>
+                </nav>
+
+                <!-- SECTION 1: BERANDA -->
+                <section id="page-beranda" class="page-content space-y-6">
+                    <!-- Hero Banner -->
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-800 text-white p-6 sm:p-10 shadow-xl">
+                        <div class="absolute right-0 top-0 bottom-0 w-1/3 opacity-10 pointer-events-none flex items-center justify-center">
+                            <i class="fa-solid fa-kaaba text-[180px]"></i>
+                        </div>
+                        <div class="relative z-10 max-w-2xl">
+                            <span class="px-3 py-1 rounded-full bg-white/20 text-xs font-semibold backdrop-blur-md uppercase tracking-wider">Kurikulum Merdeka</span>
+                            <h2 class="text-2xl sm:text-4xl font-extrabold mt-3 mb-2 leading-tight">Selamat Datang, <span id="welcome-user-name">Siswa</span>!</h2>
+                            <p class="text-emerald-100 text-sm sm:text-base mb-6 leading-relaxed">
+                                Mari pelajari kedudukan Al-Qur'an, Hadis, dan Ijtihad sebagai landasan utama hukum Islam dalam kehidupan sehari-hari secara interaktif.
+                            </p>
+                            <div class="flex flex-wrap gap-3">
+                                <button onclick="navigateTo('materi')" class="px-5 py-2.5 bg-white text-emerald-800 font-bold rounded-xl text-sm shadow-md hover:bg-emerald-50 transition flex items-center gap-2">
+                                    <i class="fa-solid fa-play"></i> Mulai Belajar
+                                </button>
+                                <button onclick="navigateTo('game')" class="px-5 py-2.5 bg-emerald-700/60 hover:bg-emerald-700 text-white font-semibold rounded-xl text-sm backdrop-blur-md transition flex items-center gap-2">
+                                    <i class="fa-solid fa-gamepad"></i> Mainkan Game
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats & Learning Objectives Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Card 1: Progress Belajar -->
+                        <div class="glass-card p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Progres Keseluruhan</h3>
+                                    <p class="text-2xl font-extrabold text-slate-800 dark:text-white mt-1" id="dash-progress-percent">0%</p>
+                                </div>
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-lg">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                </div>
+                            </div>
+                            <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2">
+                                <div id="dash-progress-bar" class="bg-emerald-500 h-2 rounded-full w-0 transition-all duration-500"></div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Status Game -->
+                        <div class="glass-card p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Game Susun Urutan</h3>
+                                    <p class="text-2xl font-extrabold text-slate-800 dark:text-white mt-1" id="dash-game-score">0 <span class="text-xs font-normal text-slate-400">/ 10 Level</span></p>
+                                </div>
+                                <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-lg">
+                                    <i class="fa-solid fa-trophy"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Selesaikan semua level susun hirarki hukum.</p>
+                        </div>
+
+                        <!-- Card 3: Evaluasi Terbaik -->
+                        <div class="glass-card p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Nilai Evaluasi Akhir</h3>
+                                    <p class="text-2xl font-extrabold text-slate-800 dark:text-white mt-1" id="dash-eval-score">-</p>
+                                </div>
+                                <div class="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-500 flex items-center justify-center text-lg">
+                                    <i class="fa-solid fa-graduation-cap"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400" id="dash-eval-status">Belum dikerjakan</p>
+                        </div>
+                    </div>
+
+                    <!-- Tujuan Pembelajaran Card -->
+                    <div class="glass-card p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+                        <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-bullseye text-emerald-500"></i> Tujuan Pembelajaran
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="p-4 rounded-xl bg-white/60 dark:bg-slate-900/60 border border-slate-200/50 dark:border-slate-800/50 flex gap-3 items-start">
+                                <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">1</span>
+                                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">Menerapkan konsep dasar sumber hukum Islam dalam kehidupan sehari-hari.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-white/60 dark:bg-slate-900/60 border border-slate-200/50 dark:border-slate-800/50 flex gap-3 items-start">
+                                <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">2</span>
+                                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">Merefleksikan pemahaman sumber hukum Islam dalam kehidupan bermasyarakat.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-white/60 dark:bg-slate-900/60 border border-slate-200/50 dark:border-slate-800/50 flex gap-3 items-start">
+                                <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">3</span>
+                                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">Menganalisis hirarki dan kedudukan Al-Qur'an, Hadis, dan Ijtihad secara sahih.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION 2: PETUNJUK -->
+                <section id="page-petunjuk" class="page-content space-y-6 hidden">
+                    <div class="glass-card p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+                        <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-6 flex items-center gap-2">
+                            <i class="fa-solid fa-compass text-emerald-500"></i> Petunjuk Penggunaan Media Pembelajaran
+                        </h2>
+
+                        <div class="space-y-6">
+                            <!-- Step 1 -->
+                            <div class="flex gap-4 items-start">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-lg font-bold shrink-0">1</div>
+                                <div>
+                                    <h3 class="text-base font-semibold text-slate-800 dark:text-white">Materi Interaktif</h3>
+                                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+                                        Pelajari konsep Al-Qur'an, Hadis, dan Ijtihad melalui tab materi. Klik setiap kartu untuk membuka perincian dalil, fungsi, serta contoh penerapan dalam kehidupan modern.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="flex gap-4 items-start">
+                                <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-lg font-bold shrink-0">2</div>
+                                <div>
+                                    <h3 class="text-base font-semibold text-slate-800 dark:text-white">Game Susun Urutan (10 Level)</h3>
+                                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+                                        Geser (drag) atau gunakan tombol panah untuk menyusun urutan kedudukan sumber hukum Islam atau urutan penetapan hukum secara benar. Waktu dibatasi <strong>60 detik per soal</strong>.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div class="flex gap-4 items-start">
+                                <div class="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-500 flex items-center justify-center text-lg font-bold shrink-0">3</div>
+                                <div>
+                                    <h3 class="text-base font-semibold text-slate-800 dark:text-white">Latihan Soal & Evaluasi</h3>
+                                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+                                        Latihan berisi 20 soal (10 HOTS + 10 Reguler), sedangkan Evaluasi berisi 30 soal (15 HOTS + 15 Reguler). Setiap soal diberi waktu <strong>60 detik</strong>. Terdapat proteksi anti-copy dan anti-screenshot untuk menjaga integritas asesmen.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION 3: MATERI INTERAKTIF -->
+                <section id="page-materi" class="page-content space-y-6 hidden">
+                    <!-- Tab Buttons -->
+                    <div class="flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+                        <button onclick="switchMateriTab('alquran')" id="tab-btn-alquran" class="materi-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-emerald-600 text-white shadow-md transition">
+                            <i class="fa-solid fa-book-quran mr-1.5"></i> 1. Al-Qur'an
+                        </button>
+                        <button onclick="switchMateriTab('hadis')" id="tab-btn-hadis" class="materi-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition">
+                            <i class="fa-solid fa-scroll mr-1.5"></i> 2. Hadis / Sunnah
+                        </button>
+                        <button onclick="switchMateriTab('ijtihad')" id="tab-btn-ijtihad" class="materi-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition">
+                            <i class="fa-solid fa-scale-balanced mr-1.5"></i> 3. Ijtihad (Ijma', Qiyas, dll)
+                        </button>
+                    </div>
+
+                    <!-- Tab 1: Al-Qur'an -->
+                    <div id="materi-alquran" class="materi-tab-content space-y-6">
+                        <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2">Al-Qur'an: Sumber Hukum Islam Utama</h3>
+                            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                                Al-Qur'an secara bahasa berasal dari kata <i>qara'a - yaqra'u - qur'anan</i> yang berarti bacaan. Secara istilah, Al-Qur'an adalah kalam Allah SWT yang diturunkan kepada Nabi Muhammad SAW melalui malaikat Jibril sebagai mukjizat dan bernilai ibadah bagi yang membacanya.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="glass-card p-5 rounded-xl border border-emerald-500/20">
+                                <h4 class="font-bold text-emerald-600 dark:text-emerald-400 mb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-star"></i> Kedudukan Al-Qur'an
+                                </h4>
+                                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                                    Kedudukan Al-Qur'an adalah sebagai <strong>Sumber Hukum Pertama dan Utama</strong> dalam ajaran Islam. Semua sumber hukum lainnya tidak boleh bertentangan dengan Al-Qur'an.
+                                </p>
+                            </div>
+
+                            <div class="glass-card p-5 rounded-xl border border-emerald-500/20">
+                                <h4 class="font-bold text-emerald-600 dark:text-emerald-400 mb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-list-check"></i> Isi Hukum dalam Al-Qur'an
+                                </h4>
+                                <ul class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1 list-disc list-inside">
+                                    <li><strong>Hukum Akidah:</strong> Keyakinan kepada Allah dan Rukun Iman.</li>
+                                    <li><strong>Hukum Akhlak:</strong> Kehormatan, kesopanan, dan budi pekerti.</li>
+                                    <li><strong>Hukum Amaliyah:</strong> Ibada dan Muamalah (kemasyarakatan).</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Dalil Box -->
+                        <div class="p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-center">
+                            <p class="font-arabic text-2xl text-slate-800 dark:text-slate-100 mb-3" dir="rtl">
+                                📑 QS. An-Nisa' [4]: 59
+                            </p>
+                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 italic">
+                                "Wahai orang-orang yang beriman! Taatilah Allah dan taatilah Rasul (Muhammad), dan Ulil Amri (pemegang kekuasaan) di antara kamu. Kemudian jika kamu berbeda pendapat tentang sesuatu, maka kembalikanlah kepada Allah (Al-Qur'an) dan Rasul (Sunnahnya)..."
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Hadis -->
+                    <div id="materi-hadis" class="materi-tab-content space-y-6 hidden">
+                        <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2">Hadis / Sunnah: Sumber Hukum Islam Kedua</h3>
+                            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                                Hadis secara bahasa berarti baru atau berita. Secara istilah, Hadis adalah segala perkataan (qaul), perbuatan (fi'il), penetapan/persetujuan (taqrir), dan sifat Nabi Muhammad SAW.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="glass-card p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+                                <h4 class="font-bold text-slate-800 dark:text-white mb-1 text-sm">Bayan Ta'kid</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Memperkuat dan mempertegas hukum yang sudah ada di dalam Al-Qur'an.</p>
+                            </div>
+                            <div class="glass-card p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+                                <h4 class="font-bold text-slate-800 dark:text-white mb-1 text-sm">Bayan Tafsir</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Merinci/menjelaskan hukum Al-Qur'an yang masih bersifat umum (mujmal).</p>
+                            </div>
+                            <div class="glass-card p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+                                <h4 class="font-bold text-slate-800 dark:text-white mb-1 text-sm">Bayan Tasyri'</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Mewujudkan hukum baru yang tidak disebutkan secara tegas dalam Al-Qur'an.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: Ijtihad -->
+                    <div id="materi-ijtihad" class="materi-tab-content space-y-6 hidden">
+                        <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2">Ijtihad & Metode Penetapan Hukum</h3>
+                            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                                Ijtihad berarti mencurahkan segenap kemampuan berpikir secara bersungguh-sungguh oleh mujtahid untuk merumuskan hukum syara' mengenai masalah yang tidak ada nash tegasnya dalam Al-Qur'an dan Hadis.
+                            </p>
+                        </div>
+
+                        <!-- Accordion Methods -->
+                        <div class="space-y-3">
+                            <div class="glass-card rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+                                <button onclick="toggleAccordion('acc-ijma')" class="w-full p-4 text-left font-semibold text-slate-800 dark:text-white flex justify-between items-center">
+                                    <span>1. Ijma' (Kesepakatan Ulama)</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                                </button>
+                                <div id="acc-ijma" class="hidden p-4 pt-0 text-xs sm:text-sm text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800">
+                                    Kesepakatan para ulama mujtahid pada suatu masa setelah wafatnya Rasulullah SAW tentang suatu hukum syariat. Contoh: Pembukuan mushaf Al-Qur'an pada masa Sahabat.
+                                </div>
+                            </div>
+
+                            <div class="glass-card rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+                                <button onclick="toggleAccordion('acc-qiyas')" class="w-full p-4 text-left font-semibold text-slate-800 dark:text-white flex justify-between items-center">
+                                    <span>2. Qiyas (Analogi Hukum)</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                                </button>
+                                <div id="acc-qiyas" class="hidden p-4 pt-0 text-xs sm:text-sm text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800">
+                                    Menyamakan hukum suatu kasus baru yang tidak ada nash-nya dengan kasus lama yang ada nash-nya karena persamaan <i>'illat</i> (sebab hukum). Contoh: Memperhitungkan hukum narkoba disamakan dengan khamr (memabukkan).
+                                </div>
+                            </div>
+
+                            <div class="glass-card rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+                                <button onclick="toggleAccordion('acc-maslahah')" class="w-full p-4 text-left font-semibold text-slate-800 dark:text-white flex justify-between items-center">
+                                    <span>3. Maslahah Mursalah & Metodologi Lain ('Urf, Saddu Dzari'ah)</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                                </button>
+                                <div id="acc-maslahah" class="hidden p-4 pt-0 text-xs sm:text-sm text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800 space-y-2">
+                                    <p><strong>Maslahah Mursalah:</strong> Penetapan hukum berdasarkan kemaslahatan umum tanpa ada nash spesifik yang mendukung atau melarang. (Contoh: Aturan lalu lintas, pembuatan SIM).</p>
+                                    <p><strong>'Urf:</strong> Adat istiadat masyarakat yang tidak bertentangan dengan syariat.</p>
+                                    <p><strong>Saddu Dzari'ah:</strong> Menutup jalan yang menuju kepada kemaksiatan atau kerusakan.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION 4: GAME SUSUN URUTAN -->
+                <section id="page-game" class="page-content space-y-6 hidden">
+                    <div class="glass-card p-6 rounded-2xl border border-amber-500/30">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+                            <div>
+                                <span class="px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold text-xs uppercase">Game Interaktif</span>
+                                <h2 class="text-xl font-bold text-slate-800 dark:text-white mt-1">Susun Urutan Sumber Hukum & Prosedur</h2>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="text-right">
+                                    <span class="text-xs text-slate-400">Waktu Soal</span>
+                                    <div class="text-xl font-extrabold text-amber-500" id="game-timer">60s</div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-xs text-slate-400">Level Game</span>
+                                    <div class="text-xl font-extrabold text-emerald-500" id="game-level-display">1 / 10</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6">
+                            <p class="text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2" id="game-instruction">
+                                Urutkan tahapan/hirarki berikut dari urutan tertinggi ke rendah:
+                            </p>
+                            <p class="text-xs text-slate-400 mb-4">*Gunakan tombol panah ke atas/bawah pada tiap item untuk mengubah posisi urutan.</p>
+
+                            <!-- Sortable items list -->
+                            <div id="game-sort-container" class="space-y-3 mb-6">
+                                <!-- Dynamic Items inserted via JS -->
+                            </div>
+
+                            <div class="flex justify-between items-center">
+                                <div class="text-xs font-semibold text-slate-500">Skor Game Saat Ini: <span id="game-current-score" class="text-emerald-500 text-sm">0</span></div>
+                                <button onclick="checkGameAnswer()" class="px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl shadow-lg transition flex items-center gap-2">
+                                    <i class="fa-solid fa-check"></i> Periksa & Lanjut
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION 5: LATIHAN SOAL -->
+                <section id="page-latihan" class="page-content space-y-6 hidden">
+                    <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+                        <!-- Quiz Header -->
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+                            <div>
+                                <span class="px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold text-xs uppercase" id="quiz-badge">Latihan (20 Soal)</span>
+                                <h2 class="text-lg font-bold text-slate-800 dark:text-white mt-1" id="quiz-title">Uji Pemahaman Mandiri</h2>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="text-right">
+                                    <span class="text-xs text-slate-400">Sisa Waktu</span>
+                                    <div class="text-xl font-extrabold text-rose-500" id="quiz-timer">60s</div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-xs text-slate-400">Soal</span>
+                                    <div class="text-xl font-extrabold text-emerald-500" id="quiz-num">1 / 20</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quiz Container -->
+                        <div id="quiz-body-container" class="mt-6">
+                            <div class="mb-4">
+                                <span id="quiz-hots-tag" class="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-purple-500/20 text-purple-600 dark:text-purple-400 mb-2">HOTS</span>
+                                <p id="quiz-question-text" class="text-base font-semibold text-slate-800 dark:text-white leading-relaxed">
+                                    Pertanyaan akan dimuat...
+                                </p>
+                            </div>
+
+                            <!-- Options Grid -->
+                            <div id="quiz-options-container" class="space-y-3 my-6">
+                                <!-- Options dynamically rendered -->
+                            </div>
+
+                            <div class="flex justify-between items-center pt-4 border-t border-slate-200 dark:border-slate-800">
+                                <button onclick="nextQuizQuestion()" class="ml-auto px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-md transition flex items-center gap-2">
+                                    Selanjutnya <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Quiz Summary Container (hidden by default) -->
+                        <div id="quiz-summary-container" class="mt-6 hidden text-center space-y-4">
+                            <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center text-3xl mx-auto">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                            <h3 class="text-2xl font-extrabold text-slate-800 dark:text-white">Latihan Selesai!</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Berikut rekapitulasi hasil latihan Anda:</p>
+                            <div class="text-4xl font-extrabold text-emerald-500" id="quiz-final-score">0</div>
+                            <p class="text-xs text-slate-400" id="quiz-score-detail">Benar 0 dari 20 Soal</p>
+                            <button onclick="resetQuiz('latihan')" class="px-6 py-2.5 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-500 transition">Ulangi Latihan</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION 6: EVALUASI AKHIR -->
+                <section id="page-evaluasi" class="page-content space-y-6 hidden">
+                    <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+                        <div id="eval-intro-screen" class="text-center py-8 space-y-4">
+                            <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center text-4xl mx-auto shadow-xl">
+                                <i class="fa-solid fa-file-signature"></i>
+                            </div>
+                            <h2 class="text-2xl font-extrabold text-slate-800 dark:text-white">Evaluasi Akhir Pembelajaran</h2>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+                                Tes ini terdiri dari 30 Soal (15 HOTS + 15 Reguler) dengan durasi 60 detik per soal. Fitur salin teks dan screenshot dinonaktifkan secara ketat.
+                            </p>
+                            <button onclick="startEvaluasi()" class="px-8 py-3 bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-bold rounded-xl shadow-lg hover:from-emerald-500 hover:to-teal-400 transition">
+                                Mulai Evaluasi Sekarang
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION 7: RINGKASAN -->
+                <section id="page-ringkasan" class="page-content space-y-6 hidden">
+                    <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+                        <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-file-contract text-emerald-500"></i> Ringkasan Utama Matakuliah
+                        </h2>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                            <div class="p-4 rounded-xl bg-white/60 dark:bg-slate-900/60 border border-slate-200/50 dark:border-slate-800/50">
+                                <h4 class="font-bold text-emerald-600 dark:text-emerald-400 mb-1">1. Al-Qur'an</h4>
+                                <p class="text-slate-600 dark:text-slate-300">Sumber utama & pertama. Berisi hukum akidah, akhlak, amaliyah. Berisikan ayat qath'i (pasti) dan zhanni (penafsiran).</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-white/60 dark:bg-slate-900/60 border border-slate-200/50 dark:border-slate-800/50">
+                                <h4 class="font-bold text-emerald-600 dark:text-emerald-400 mb-1">2. Hadis / Sunnah</h4>
+                                <p class="text-slate-600 dark:text-slate-300">Sumber kedua. Berfungsi sebagai Bayan Ta'kid, Bayan Tafsir, dan Bayan Tasyri'.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-white/60 dark:bg-slate-900/60 border border-slate-200/50 dark:border-slate-800/50">
+                                <h4 class="font-bold text-emerald-600 dark:text-emerald-400 mb-1">3. Ijma'</h4>
+                                <p class="text-slate-600 dark:text-slate-300">Kesepakatan ulama mujtahid pasca wafatnya Nabi SAW atas hukum syara'.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-white/60 dark:bg-slate-900/60 border border-slate-200/50 dark:border-slate-800/50">
+                                <h4 class="font-bold text-emerald-600 dark:text-emerald-400 mb-1">4. Qiyas</h4>
+                                <p class="text-slate-600 dark:text-slate-300">Menyepadankan hukum kasus baru dengan kasus yang ada nash-nya karena kesamaan 'illat.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION 8: REFERENSI -->
+                <section id="page-referensi" class="page-content space-y-6 hidden">
+                    <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+                        <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-bookmark text-emerald-500"></i> Referensi Sumber Hukum Islam
+                        </h2>
+                        <ul class="space-y-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                            <li class="p-3 rounded-xl bg-white/40 dark:bg-slate-900/40 border border-slate-200/40 dark:border-slate-800/40">
+                                📖 <strong>Kementerian Agama RI.</strong> (2021). <i>Al-Qur'an dan Terjemahannya</i>. Jakarta: Kemenag RI.
+                            </li>
+                            <li class="p-3 rounded-xl bg-white/40 dark:bg-slate-900/40 border border-slate-200/40 dark:border-slate-800/40">
+                                📖 <strong>Kemendikbudristek RI.</strong> (2021). <i>Buku Teks Utama PAI dan Budi Pekerti SMA/SMK Kelas X</i>. Jakarta: Pusat Kurikulum dan Perbukuan.
+                            </li>
+                            <li class="p-3 rounded-xl bg-white/40 dark:bg-slate-900/40 border border-slate-200/40 dark:border-slate-800/40">
+                                📖 <strong>Prof. Dr. Wahbah Az-Zuhaili.</strong> (2011). <i>Ushul Fiqih Islam</i>. Jakarta: Gema Insani.
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- SECTION 9: PROFIL PENYUSUN -->
+                <section id="page-profil" class="page-content space-y-6 hidden">
+                    <div class="glass-card p-8 rounded-2xl border border-slate-200 dark:border-slate-800 text-center max-w-lg mx-auto">
+                        <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-400 text-white flex items-center justify-center text-4xl font-extrabold mx-auto shadow-xl mb-4 border-4 border-white dark:border-slate-900">
+                            MS
+                        </div>
+                        <h2 class="text-2xl font-extrabold text-slate-800 dark:text-white">MS GPAI SMANSAKU</h2>
+                        <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 tracking-wider uppercase mt-1">Guru PAI & Budi Pekerti</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">
+                            Pengembang Media Pembelajaran Digital Interaktif Berbasis Web untuk Meningkatkan Pemahaman Siswa pada Materi Pendidikan Agama Islam dan Budi Pekerti.
+                        </p>
+                        <div class="flex justify-center gap-4 mt-6">
+                            <span class="px-4 py-2 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold">
+                                <i class="fa-solid fa-graduation-cap mr-1"></i> Kelas X SMANSAKU
+                            </span>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-4 text-center text-xs text-slate-500 dark:text-slate-400">
+            <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+                <p>&copy; Media Pembelajaran Interaktif PAI - MS GPAI SMANSAKU</p>
+                <p class="text-[10px] text-slate-400">Hak Cipta Dilindungi • Didesain untuk Pembelajaran Bermakna</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- SCROLL TO TOP BUTTON -->
+    <button id="scroll-top-btn" onclick="scrollToTop()" class="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-emerald-600 text-white shadow-xl opacity-0 pointer-events-none transition-all duration-300 hover:bg-emerald-500">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed bottom-6 left-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- VANILLA JAVASCRIPT LOGIC -->
+    <script>
+        /* ==========================================================================
+           1. CONFIGURATION & STATE MANAGEMENT
+           ========================================================================== */
+        const SECRET_PIN = "123456"; // Default PIN mudah diubah di sini
+
+        let currentUser = null;
+        let activePage = "beranda";
+
+        // Web Audio API Sound Synthesizer (No external audio files required)
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new AudioCtx();
+        }
+
+        function playSound(type) {
+            try {
+                initAudio();
+                if (!audioCtx) return;
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+
+                if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(400, now);
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                } else if (type === 'correct') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, now); // A3
+                    osc.frequency.setValueAtTime(164.81, now + 0.15); // E3
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                }
+            } catch (e) {
+                console.log("Audio play error:", e);
+            }
+        }
+
+        /* ==========================================================================
+           2. ANTI-COPY & ANTI-SCREENSHOT PROTECTION LOGIC
+           ========================================================================== */
+        // Disable Right Click / Context Menu
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        // Keyboard Shortcut Blockers (F12, PrintScreen, Ctrl+C, Ctrl+U, Ctrl+S, Shift+Ctrl+I)
+        document.addEventListener('keydown', function (e) {
+            if (
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) ||
+                (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 'c' || e.key === 'C' || e.key === 's' || e.key === 'S')) ||
+                e.key === 'PrintScreen'
+            ) {
+                e.preventDefault();
+                showToast("Tindakan disalin/tangkapan layar tidak diizinkan!", "warning");
+            }
+        });
+
+        // Focus Blur Overlay Protection
+        window.addEventListener('blur', () => {
+            const overlay = document.getElementById('blur-protection-overlay');
+            if (overlay) overlay.classList.remove('hidden');
+            if (overlay) overlay.classList.add('flex');
+        });
+
+        window.addEventListener('focus', () => {
+            const overlay = document.getElementById('blur-protection-overlay');
+            if (overlay) overlay.classList.add('hidden');
+            if (overlay) overlay.classList.remove('flex');
+        });
+
+        /* ==========================================================================
+           3. AUTHENTICATION & SESSION MANAGEMENT
+           ========================================================================== */
+        function checkSession() {
+            const saved = localStorage.getItem('pai_user_session');
+            if (saved) {
+                currentUser = JSON.parse(saved);
+                initMainApp();
+            } else {
+                document.getElementById('login-modal').classList.remove('hidden');
+                document.getElementById('main-app').classList.add('hidden');
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            playSound('click');
+            const name = document.getElementById('login-name').value.trim();
+            const school = document.getElementById('login-school').value.trim();
+            const pin = document.getElementById('login-pin').value.trim();
+
+            if (pin !== SECRET_PIN) {
+                showToast("PIN Akses Salah! Gunakan PIN: " + SECRET_PIN, "danger");
+                playSound('wrong');
+                return;
+            }
+
+            currentUser = {
+                name: name,
+                school: school,
+                progress: 0,
+                gameLevel: 1,
+                gameScore: 0,
+                latihanScore: null,
+                evalScore: null
+            };
+
+            localStorage.setItem('pai_user_session', JSON.stringify(currentUser));
+            showToast("Login Berhasil! Selamat Datang.", "success");
+            playSound('correct');
+
+            document.getElementById('login-modal').classList.add('hidden');
+            initMainApp();
+        }
+
+        function handleLogout() {
+            playSound('click');
+            if (confirm("Apakah Anda yakin ingin keluar dari aplikasi?")) {
+                localStorage.removeItem('pai_user_session');
+                currentUser = null;
+                location.reload();
+            }
+        }
+
+        function initMainApp() {
+            document.getElementById('main-app').classList.remove('hidden');
+            document.getElementById('user-display-name').innerText = currentUser.name;
+            document.getElementById('welcome-user-name').innerText = currentUser.name;
+            document.getElementById('user-initials').innerText = currentUser.name.charAt(0).toUpperCase();
+            document.getElementById('sidebar-school-name').innerText = currentUser.school;
+
+            updateDashboardStats();
+            navigateTo('beranda');
+        }
+
+        /* ==========================================================================
+           4. NAVIGATION & THEME LOGIC
+           ========================================================================== */
+        function navigateTo(pageId) {
+            playSound('click');
+            activePage = pageId;
+
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
+
+            // Show selected page
+            const target = document.getElementById(`page-${pageId}`);
+            if (target) target.classList.remove('hidden');
+
+            // Update Breadcrumb
+            document.getElementById('breadcrumb-active').innerText = pageId;
+
+            // Update Nav Active State
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.getAttribute('data-page') === pageId) {
+                    btn.className = "nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 font-semibold";
+                } else {
+                    btn.className = "nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition";
+                }
+            });
+
+            // Mobile sidebar close
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (!sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+
+            // Page specific initializers
+            if (pageId === 'game') initGameLevel();
+            if (pageId === 'latihan') resetQuiz('latihan');
+        }
+
+        function toggleSidebar() {
+            playSound('click');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        function toggleDarkMode() {
+            playSound('click');
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                themeIcon.className = "fa-solid fa-sun text-lg text-amber-500";
+            } else {
+                html.classList.add('dark');
+                themeIcon.className = "fa-solid fa-moon text-lg";
+            }
+        }
+
+        /* ==========================================================================
+           5. MATERI INTERAKTIF LOGIC
+           ========================================================================== */
+        function switchMateriTab(tabName) {
+            playSound('click');
+            document.querySelectorAll('.materi-tab-content').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.materi-tab-btn').forEach(b => {
+                b.className = "materi-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition";
+            });
+
+            document.getElementById(`materi-${tabName}`).classList.remove('hidden');
+            document.getElementById(`tab-btn-${tabName}`).className = "materi-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-emerald-600 text-white shadow-md transition";
+        }
+
+        function toggleAccordion(id) {
+            playSound('click');
+            const acc = document.getElementById(id);
+            acc.classList.toggle('hidden');
+        }
+
+        /* ==========================================================================
+           6. GAME SUSUN URUTAN (10 LEVELS)
+           ========================================================================== */
+        const gameLevels = [
+            {
+                level: 1,
+                instruction: "Urutkan Hirarki Utama Sumber Hukum Islam dari yang tertinggi:",
+                items: ["Al-Qur'an (Kalamullah)", "Hadis / Sunnah Rasulullah", "Ijtihad Ulama Mujtahid"]
+            },
+            {
+                level: 2,
+                instruction: "Urutkan Tahapan Pengambilan Hukum oleh Mufti/Mujtahid:",
+                items: ["Mencari nash tegas dalam Al-Qur'an", "Mencari petunjuk spesifik dalam Hadis", "Melakukan Ijtihad (Ijma'/Qiyas)"]
+            },
+            {
+                level: 3,
+                instruction: "Urutkan Hirarki Kualitas Hadis berdasarkan Kekuatan Sanad:",
+                items: ["Hadis Mutawatir", "Hadis Shahih", "Hadis Hasan"]
+            },
+            {
+                level: 4,
+                instruction: "Urutkan Fungsi Hadis terhadap Al-Qur'an secara Logis:",
+                items: ["Bayan Ta'kid (Memperkuat Hukum Al-Qur'an)", "Bayan Tafsir (Merinci Ayat Umum)", "Bayan Tasyri' (Menetapkan Hukum Baru)"]
+            },
+            {
+                level: 5,
+                instruction: "Urutkan Rukun Qiyas dalam Ushul Fiqh secara Benar:",
+                items: ["Al-Asl (Pokok Hukum Asal)", "Al-Far'u (Cabang Kasus Baru)", "Hukum Asl (Ketentuan Hukum Asal)", "'Illat (Persamaan Sebab Hukum)"]
+            },
+            {
+                level: 6,
+                instruction: "Urutkan Proses Ijma' Sahabat pasca Wafatnya Nabi SAW:",
+                items: ["Munculnya permasalahan baru umat", "Pengumpulan ulama mujtahid sahabat", "Musyawarah & kesepakatan bulat", "Penetapan fatwa ijma'"]
+            },
+            {
+                level: 7,
+                instruction: "Urutkan Tingkatan Kemaslahatan (Maqashid Sharia):",
+                items: ["Ad-Dharuriyyat (Kebutuhan Pokok Primar)", "Al-Hajiyyat (Kebutuhan Sekunder)", "At-Tahsiniyyat (Kebutuhan Pelengkap/Komplementer)"]
+            },
+            {
+                level: 8,
+                instruction: "Urutkan Metode Ijtihad dari yang Sepakat hingga yang Dipertimbangkan:",
+                items: ["Ijma' Ulama", "Qiyas", "Maslahah Mursalah", "Saddu Dzari'ah"]
+            },
+            {
+                level: 9,
+                instruction: "Urutkan Pembagian Hukum Taklifi dalam Fiqh:",
+                items: ["Wajib (Dikerjakan Pahala, Ditinggalkan Dosa)", "Sunnah (Dikerjakan Pahala, Ditinggalkan Tidak Dosa)", "Mubah (Dikerjakan/Ditinggalkan Tidak Dosa)", "Makruh (Ditinggalkan Pahala)", "Haram (Ditinggalkan Pahala, Dikerjakan Dosa)"]
+            },
+            {
+                level: 10,
+                instruction: "Urutkan Langkah Penerapan Nilai Sumber Hukum Islam dalam Kehidupan:",
+                items: ["Memahami dalil Al-Qur'an & Hadis", "Mengkonsultasikan dengan ijma' ulama", "Menganalisis kemaslahatan kondisi lingkungan", "Mengamalkan dengan niat ibadah & ikhlas"]
+            }
+        ];
+
+        let currentGameLevel = 0;
+        let currentGameItems = [];
+        let gameTimerInterval = null;
+        let gameTimeLeft = 60;
+
+        function initGameLevel() {
+            if (currentGameLevel >= gameLevels.length) {
+                showToast("Selamat! Semua Level Game Telah Selesai!", "success");
+                confetti();
+                return;
+            }
+
+            const lvlData = gameLevels[currentGameLevel];
+            document.getElementById('game-level-display').innerText = `${lvlData.level} / 10`;
+            document.getElementById('game-instruction').innerText = lvlData.instruction;
+
+            // Copy and Shuffle Items for player to order
+            currentGameItems = [...lvlData.items].sort(() => Math.random() - 0.5);
+
+            renderGameItems();
+            resetGameTimer();
+        }
+
+        function renderGameItems() {
+            const container = document.getElementById('game-sort-container');
+            container.innerHTML = "";
+
+            currentGameItems.forEach((item, index) => {
+                const itemEl = document.createElement('div');
+                itemEl.className = "flex items-center justify-between p-3.5 rounded-xl bg-white/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 shadow-sm transition";
+                itemEl.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="w-6 h-6 rounded-lg bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold text-xs flex items-center justify-center">${index + 1}</span>
+                        <span class="text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200">${item}</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <button onclick="moveGameItem(${index}, -1)" class="p-1.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-amber-500 hover:text-white transition" ${index === 0 ? 'disabled class="opacity-30 p-1.5"' : ''}>
+                            <i class="fa-solid fa-arrow-up text-xs"></i>
+                        </button>
+                        <button onclick="moveGameItem(${index}, 1)" class="p-1.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-amber-500 hover:text-white transition" ${index === currentGameItems.length - 1 ? 'disabled class="opacity-30 p-1.5"' : ''}>
+                            <i class="fa-solid fa-arrow-down text-xs"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(itemEl);
+            });
+        }
+
+        function moveGameItem(index, direction) {
+            playSound('click');
+            const targetIndex = index + direction;
+            if (targetIndex < 0 || targetIndex >= currentGameItems.length) return;
+
+            const temp = currentGameItems[index];
+            currentGameItems[index] = currentGameItems[targetIndex];
+            currentGameItems[targetIndex] = temp;
+
+            renderGameItems();
+        }
+
+        function resetGameTimer() {
+            clearInterval(gameTimerInterval);
+            gameTimeLeft = 60;
+            document.getElementById('game-timer').innerText = gameTimeLeft + 's';
+
+            gameTimerInterval = setInterval(() => {
+                gameTimeLeft--;
+                document.getElementById('game-timer').innerText = gameTimeLeft + 's';
+                if (gameTimeLeft <= 0) {
+                    clearInterval(gameTimerInterval);
+                    playSound('wrong');
+                    showToast("Waktu Habis! Lanjut ke level berikutnya.", "warning");
+                    nextGameLevel(false);
+                }
+            }, 1000);
+        }
+
+        function checkGameAnswer() {
+            clearInterval(gameTimerInterval);
+            const targetSolution = gameLevels[currentGameLevel].items;
+            let isCorrect = true;
+
+            for (let i = 0; i < targetSolution.length; i++) {
+                if (currentGameItems[i] !== targetSolution[i]) {
+                    isCorrect = false;
+                    break;
+                }
+            }
+
+            if (isCorrect) {
+                playSound('correct');
+                showToast("Urutan Benar! +10 Poin", "success");
+                currentUser.gameScore = (currentUser.gameScore || 0) + 10;
+            } else {
+                playSound('wrong');
+                showToast("Urutan Kurang Tepat! Lanjut ke level berikutnya.", "danger");
+            }
+
+            document.getElementById('game-current-score').innerText = currentUser.gameScore;
+            nextGameLevel(isCorrect);
+        }
+
+        function nextGameLevel(isCorrect) {
+            currentGameLevel++;
+            currentUser.gameLevel = currentGameLevel + 1;
+            updateDashboardStats();
+
+            if (currentGameLevel < gameLevels.length) {
+                initGameLevel();
+            } else {
+                showToast("Game Selesai! Skor Akhir: " + currentUser.gameScore, "success");
+                confetti();
+            }
+        }
+
+        /* ==========================================================================
+           7. LATIHAN & EVALUASI QUIZ SYSTEM (50 SOAL COMPLETE DATABASE)
+           ========================================================================== */
+        const quizBank = [
+            // 10 HOTS LATIHAN
+            { isHots: true, q: "Seiring perkembangan zaman, ditemukan kasus transaksi kripto dan NFT. Ulama melakukan ijtihad untuk menentukan hukumnya. Mengapa ijtihad diperlukan dalam kasus baru ini?", options: ["Karena Al-Qur'an dan Hadis tidak memuat hukum Islam", "Karena tidak ada rincian nash sharih (tegas) dalam Al-Qur'an & Hadis mengenai NFT", "Karena hukum Islam bersifat kaku dan selalu berubah", "Karena Hadis Nabi SAW hanya berlaku untuk zaman dahulu"], correct: 1 },
+            { isHots: true, q: "Seorang ilmuwan mengklon pembentukan organ manusia dari sel punca untuk pengobatan medis. Penentuan hukumnya menggunakan analisis Qiyas dan Maslahah Mursalah. Peran illat dalam Qiyas kasus ini adalah...", options: ["Teks eksplisit ayat Al-Qur'an", "Kesamaan alasan hukum yaitu menyelamatkan jiwa manusia (Hifz an-Nafs)", "Kesepakatan seluruh ulama di masa lalu", "Adat kebiasaan masyarakat setempat"], correct: 1 },
+            { isHots: true, q: "Dalam suatu daerah terjadi wabah menular. Pemerintah melarang ibadah secara berjamaah rapat di masjid untuk sementara waktu. Kebijakan ini selaras dengan kaidah ijtihad...", options: ["Saddu Dzari'ah (Menutup jalan bahaya/kemudaratan)", "Istihsan semata", "'Urf shahih setempat", "Ijma' Sukuti"], correct: 0 },
+            { isHots: true, q: "Apabila terjadi pertentangan secara zahir antara Hadis Ahad dengan prinsip umum Al-Qur'an yang qath'i, maka kedudukan penetapan hukum adalah...", options: ["Mendahulukan Hadis Ahad", "Mengabaikan Al-Qur'an", "Mendahulukan prinsip umum Al-Qur'an yang Qath'i", "Membatalkan kedua sumber hukum"], correct: 2 },
+            { isHots: true, q: "Pernyataan mana yang menunjukkan penerapan Bayan Tafsir oleh Hadis Nabi SAW?", options: ["Nabi SAW menegaskan kembali perintah shalat", "Nabi SAW merinci tata cara shalat teknis yang dalam Al-Qur'an hanya diperintahkan secara umum", "Nabi melarang memakan binatang buas bertaring", "Nabi menyetujui tindakan sahabat"], correct: 1 },
+            { isHots: true, q: "Mengapa Ijma' Ulama dipandang memiliki otoritas kebenaran setelah Al-Qur'an dan Hadis?", options: ["Karena ulama tidak pernah berbuat dosa", "Karena adanya jaminan Hadis bahwa umat Nabi Muhammad tidak akan sepakat dalam kesesatan", "Karena ulama membuat wahyu baru", "Karena Ijma' dibuat oleh pemerintah"], correct: 1 },
+            { isHots: true, q: "Perhatikan kasus: Mengemudikan kendaraan tanpa SIM dilarang secara hukum demi keselamatan. Penetapan hukum ini didasarkan pada Maslahah Mursalah karena...", options: ["Ada perintah eksplisit di Al-Qur'an tentang SIM", "Memenuhi syarat kemaslahatan umum tanpa bertentangan dengan dalil syara'", "Merupakan ajaran dari masa sahabat", "Hukumnya haram mutlak menurut ijma'"], correct: 1 },
+            { isHots: true, q: "Bagaimana cara menyikapi perbedaan hasil ijtihad di antara imam mazhab fiqh?", options: ["Saling menyalahkan dan menganggap mazhab lain sesat", "Menghormati perbedaan pendapat selama didasarkan pada metodologi ijtihad yang sahih", "Meninggalkan semua mazhab dan membuat hukum sendiri", "Hanya memilih hukum yang paling ringan"], correct: 1 },
+            { isHots: true, q: "Kedudukan Al-Qur'an sebagai 'Hudan lin-naas' mengandung konsekuensi logis bahwa...", options: ["Al-Qur'an hanya petunjuk bagi warga Arab", "Al-Qur'an memberikan petunjuk hidup komprehensif bagi seluruh umat manusia", "Al-Qur'an hanya dibaca saat ritual", "Al-Qur'an tidak perlu dipahami maksudnya"], correct: 1 },
+            { isHots: true, q: "Penggunaan dompet digital dalam transaksi modern diperbolehkan selama tidak mengandung riba dan gharar. Penyimpulan hukum ini merupakan bentuk...", options: ["Penerapan 'Urf shahih dan kebebasan muamalah", "Penghapusan hukum Al-Qur'an", "Ijtihad tanpa landasan syariah", "Qiyas yang salah"], correct: 0 },
+
+            // 10 REGULER LATIHAN
+            { isHots: false, q: "Sumber hukum Islam yang pertama dan paling utama adalah...", options: ["Hadis", "Ijma'", "Al-Qur'an", "Qiyas"], correct: 2 },
+            { isHots: false, q: "Secara bahasa kata Al-Qur'an berasal dari kata qara'a yang artinya...", options: ["Ketik", "Tulis", "Bacaan", "Dengar"], correct: 2 },
+            { isHots: false, q: "Segala sesuatu yang disandarkan kepada Nabi Muhammad SAW baik berupa perkataan, perbuatan, maupun penetapan disebut...", options: ["Al-Qur'an", "Hadis", "Ijma'", "Ijtihad"], correct: 1 },
+            { isHots: false, q: "Kesepakatan para ulama mujtahid tentang suatu hukum syara' setelah wafatnya Rasulullah SAW disebut...", options: ["Qiyas", "Ijma'", "Istihsan", "'Urf"], correct: 1 },
+            { isHots: false, q: "Menyamakan hukum suatu kejadian yang belum ada nash-nya dengan kejadian yang sudah ada nash-nya dinamakan...", options: ["Qiyas", "Ijma'", "Hadis", "Fatwa"], correct: 0 },
+            { isHots: false, q: "Fungsi Hadis untuk memperkuat hukum yang ada dalam Al-Qur'an dinamakan Bayan...", options: ["Tafsir", "Tasyri'", "Ta'kid", "Nasakh"], correct: 2 },
+            { isHots: false, q: "Surah Al-Qur'an yang memerintahkan untuk taat kepada Allah, Rasul, dan Ulil Amri adalah Surah...", options: ["Al-Baqarah: 183", "An-Nisa': 59", "Al-Ma'idah: 3", "Ali Imran: 104"], correct: 1 },
+            { isHots: false, q: "Orang yang melakukan kegiatan Ijtihad dengan syarat-syarat tertentu disebut...", options: ["Muftah", "Mujtahid", "Mustami'", "Mufassir"], correct: 1 },
+            { isHots: false, q: "Salah satu contoh Ijma' pada masa Khulafaur Rasyidin adalah...", options: ["Pembangunan jalan tol", "Pengumpulan dan pembukuan mushaf Al-Qur'an", "Penggunaan aplikasi shalat", "Penentuan zakat fitrah dengan uang"], correct: 1 },
+            { isHots: false, q: "Hukum khamr diharamkan dalam Al-Qur'an. Hukum narkoba disamakan haramnya melalui metode...", options: ["Ijma'", "Qiyas", "'Urf", "Istishab"], correct: 1 },
+
+            // 30 SOAL EVALUASI (15 HOTS + 15 REGULER)
+            { isHots: true, q: "EVAL 1: Mengapa Al-Qur'an disebut sebagai hukum yang bersifat Qath'i al-Wurud?", options: ["Karena diriwayatkan secara mutawatir tanpa keraguan keasliannya", "Karena susunan ayatnya selalu berubah", "Karena ditulis oleh para ulama", "Karena hanya berlaku di Makkah"], correct: 0 },
+            { isHots: true, q: "EVAL 2: Seseorang meminum zat kimia baru yang membuat akal hilang total. Penentuan hukum haramnya berdasarkan Qiyas dengan khamr karena ada kesamaan...", options: ["Warna dan bentuk", "Illat yaitu sifat memabukkan/merusak akal", "Harga dan penjual", "Kemasan zat"], correct: 1 },
+            { isHots: true, q: "EVAL 3: Bagaimana hubungan antara Al-Qur'an dan Hadis dalam hierarki hukum Islam?", options: ["Hadis berposisi di atas Al-Qur'an", "Hadis berfungsi menjelaskan, memperkuat, dan melengkapi Al-Qur'an", "Al-Qur'an dan Hadis saling bertentangan", "Hadis tidak diperlukan lagi jika ada Al-Qur'an"], correct: 1 },
+            { isHots: true, q: "EVAL 4: Kasus pencatatan pernikahan di lembaga negara (KUA) tidak disebutkan spesifik dalam Al-Qur'an. Kebijakan wajib catat nikah ini tergolong...", options: ["Maslahah Mursalah demi kepastian hukum dan perlindungan keluarga", "Bid'ah yang dilarang", "Hukum haram", "Tradisi luar syariat"], correct: 0 },
+            { isHots: true, q: "EVAL 5: Jika seorang mujtahid berijtihad dan hasilnya benar, maka ia mendapatkan dua pahala. Jika salah, ia tetap mendapat satu pahala. Hal ini menunjukkan bahwa...", options: ["Islam menghargai usaha sungguh-sungguh dalam ilmiah keilmuan", "Ijtihad boleh dilakukan sembarangan orang", "Kesalahan hukum tidak bermakna", "Hukum Islam tidak memiliki kepastian"], correct: 0 },
+            { isHots: true, q: "EVAL 6: Pernyataan berikut yang merupakan bentuk Hadis Taqririyyah adalah...", options: ["Sabda Nabi tentang niat", "Perbuatan Nabi melakukan wudhu", "Sikap diam/persetujuan Nabi atas perbuatan sahabat di hadapannya", "Wajah Nabi yang berseri-seri"], correct: 2 },
+            { isHots: true, q: "EVAL 7: Mengapa Al-Qur'an tidak merinci seluruh tata cara amaliyah secara detail seperti rakaat shalat?", options: ["Agar memberi ruang Hadis dan Ijtihad untuk merinci sesuai fleksibilitas perkembangan", "Karena Al-Qur'an tidak lengkap", "Karena manusia tidak bisa membaca rincian", "Agar ulama bisa mengubah hukum"], correct: 0 },
+            { isHots: true, q: "EVAL 8: Tradisi jual beli barang dengan sistem uang muka (DP) yang menjadi kebiasaan masyarakat tanpa merugikan tergolong...", options: ["'Urf Shahih", "'Urf Fasid", "Qiyas Ma'al Fariq", "Ijma' Badali"], correct: 0 },
+            { isHots: true, q: "EVAL 9: Prinsip utama dalam Saddu Dzari'ah adalah...", options: ["Mencegah hal yang mengarah pada kerusakan sebelum terjadi", "Membiarkan kejahatan terjadi baru dihukum", "Mengabaikan akibat perbuatan", "Mengutamakan keuntungan sepihak"], correct: 0 },
+            { isHots: true, q: "EVAL 10: Hadis yang meriwayatkan bahwa 'Tolaklah hukuman hadd jika ada keraguan' menunjukkan prinsip hukum Islam yaitu...", options: ["Mengedepankan keadilan dan kehati-hatian", "Menghukum tanpa bukti", "Bebas dari hukum", "Keras tanpa ampun"], correct: 0 },
+            { isHots: true, q: "EVAL 11: Kedudukan kesepakatan ulama (Ijma') bersifat mengikat karena...", options: ["Didasarkan pada hasil ijtihad kolektif ulama yang kredibel", "Hanya formalitas pejabat", "Dipaksa oleh raja", "Dibuat tanpa acuan dalil"], correct: 0 },
+            { isHots: true, q: "EVAL 12: Mengapa metode Qiyas tidak dapat diterapkan dalam urusan ibadah mahdhah?", options: ["Karena ibadah mahdhah bersifat ta'abbudi (terikat petunjuk langsung wahyu)", "Karena ibadah mahdhah sangat mudah", "Karena tidak ada Pahala", "Karena Qiyas hanya untuk akidah"], correct: 0 },
+            { isHots: true, q: "EVAL 13: Seseorang yang bukan ahli fiqh mencoba menetapkan hukum agama sendiri dari terjemahan tanpa ilmu ushul fiqh. Tindakan ini bertentangan dengan syarat...", options: ["Mujtahid", "Muazzin", "Mustami'", "Mufassir pemula"], correct: 0 },
+            { isHots: true, q: "EVAL 14: Hukum asal dalam transaksi muamalah adalah...", options: ["Boleh (mubah) sampai ada dalil yang melarangnya", "Haram sampai ada dalil yang membolehkan", "Wajib semuanya", "Makruh semuanya"], correct: 0 },
+            { isHots: true, q: "EVAL 15: Fungsi Al-Qur'an sebagai 'As-Syifa' bermakna Al-Qur'an sebagai...", options: ["Penyembuh penyakit hati dan jiwa", "Pembeda benar salah", "Petunjuk arah", "Peringatan keras"], correct: 0 },
+
+            // 15 REGULER EVALUASI
+            { isHots: false, q: "EVAL 16: Kitab suci Al-Qur'an diturunkan kepada Nabi...", options: ["Ibrahim AS", "Musa AS", "Isa AS", "Muhammad SAW"], correct: 3 },
+            { isHots: false, q: "EVAL 17: Malaikat yang bertugas menyampaikan wahyu Al-Qur'an adalah...", options: ["Mikail", "Jibril", "Israfil", "Izrail"], correct: 1 },
+            { isHots: false, q: "EVAL 18: Hadis yang didasarkan pada ucapan Rasulullah SAW disebut Hadis...", options: ["Fi'liyah", "Qauliyah", "Taqririyah", "Hammiyah"], correct: 1 },
+            { isHots: false, q: "EVAL 19: Perbuatan Rasulullah SAW yang dijadikan petunjuk hukum disebut Hadis...", options: ["Fi'liyah", "Qauliyah", "Taqririyah", "Qudsi"], correct: 0 },
+            { isHots: false, q: "EVAL 20: Sumber hukum Islam setelah Al-Qur'an dan Hadis adalah...", options: ["Ijtihad", "Mitologi", "Buku sejarah", "Opini publik"], correct: 0 },
+            { isHots: false, q: "EVAL 21: Contoh Hadis Mutawatir adalah Hadis yang diriwayatkan oleh...", options: ["Satu orang perawi", "Banyak perawi yang mustahil sepakat berbohong", "Perawi yang ragu-ragu", "Perawi tidak dikenal"], correct: 1 },
+            { isHots: false, q: "EVAL 22: Hukum membaca Al-Qur'an bagi umat Islam bernilai...", options: ["Dosa", "Sia-sia", "Ibadah dan pahala", "Biasa saja"], correct: 2 },
+            { isHots: false, q: "EVAL 23: Kedudukan Sunnah/Hadis terhadap Al-Qur'an adalah sebagai...", options: ["Sumber utama", "Penjelas (Bayan)", "Pengganti Al-Qur'an", "Saingan Al-Qur'an"], correct: 1 },
+            { isHots: false, q: "EVAL 24: Salah satu syarat ulama mujtahid adalah menguasai...", options: ["Bahasa Arab dan Ilmu Ushul Fiqh", "Bahasa Inggris", "Ilmu Politik", "Seni musik"], correct: 0 },
+            { isHots: false, q: "EVAL 25: Menyamakan hukum padi dengan gandum dalam kewajiban Zakat menggunakan...", options: ["Qiyas", "Ijma'", "Istihsan", "Maslahah"], correct: 0 },
+            { isHots: false, q: "EVAL 26: Kebiasaan masyarakat yang baik dan tidak bertentangan dengan syariat disebut...", options: ["'Urf Shahih", "'Urf Fasid", "Bid'ah", "Maksiat"], correct: 0 },
+            { isHots: false, q: "EVAL 27: Al-Qur'an diturunkan secara berangsur-angsur selama kurang lebih...", options: ["22 tahun 2 bulan 22 hari", "10 tahun", "30 tahun", "50 tahun"], correct: 0 },
+            { isHots: false, q: "EVAL 28: Nama lain Al-Qur'an yaitu Al-Furqan yang artinya...", options: ["Pembeda antara yang hak dan batil", "Pemberitahuan", "Penyembuh", "Cahaya"], correct: 0 },
+            { isHots: false, q: "EVAL 29: Perintah Shalat lima waktu disampaikan secara umum dalam Al-Qur'an dan dirinci juknisnya oleh...", options: ["Hadis Nabi SAW", "Koran", "Buku umum", "Mimpi"], correct: 0 },
+            { isHots: false, q: "EVAL 30: Sikap seorang muslim terhadap sumber hukum Islam Al-Qur'an dan Hadis adalah...", options: ["Menerima, meyakini, dan mengamalkan", "Abaikan saja", "Meragukan", "Menolak"], correct: 0 }
+        ];
+
+        let activeQuizType = 'latihan'; // 'latihan' or 'evaluasi'
+        let currentQuizQuestions = [];
+        let currentQuizIndex = 0;
+        let quizTimerInterval = null;
+        let quizTimeLeft = 60;
+        let userQuizAnswers = [];
+
+        function resetQuiz(type) {
+            activeQuizType = type;
+            currentQuizIndex = 0;
+            userQuizAnswers = [];
+
+            if (type === 'latihan') {
+                currentQuizQuestions = quizBank.slice(0, 20); // 20 soal latihan
+                document.getElementById('quiz-badge').innerText = "Latihan (20 Soal)";
+                document.getElementById('quiz-title').innerText = "Uji Pemahaman Mandiri";
+            } else {
+                currentQuizQuestions = quizBank.slice(20, 50); // 30 soal evaluasi
+                document.getElementById('quiz-badge').innerText = "Evaluasi Akhir (30 Soal)";
+                document.getElementById('quiz-title').innerText = "Asesmen Sumatif Pembelajaran";
+            }
+
+            document.getElementById('quiz-body-container').classList.remove('hidden');
+            document.getElementById('quiz-summary-container').classList.add('hidden');
+
+            renderQuizQuestion();
+        }
+
+        function startEvaluasi() {
+            playSound('click');
+            document.getElementById('eval-intro-screen').classList.add('hidden');
+            navigateTo('latihan'); // Use shared quiz UI
+            resetQuiz('evaluasi');
+        }
+
+        function renderQuizQuestion() {
+            if (currentQuizIndex >= currentQuizQuestions.length) {
+                finishQuiz();
+                return;
+            }
+
+            const qData = currentQuizQuestions[currentQuizIndex];
+            document.getElementById('quiz-num').innerText = `${currentQuizIndex + 1} / ${currentQuizQuestions.length}`;
+            document.getElementById('quiz-question-text').innerText = qData.q;
+
+            const hotsTag = document.getElementById('quiz-hots-tag');
+            if (qData.isHots) {
+                hotsTag.classList.remove('hidden');
+            } else {
+                hotsTag.classList.add('hidden');
+            }
+
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.innerHTML = "";
+
+            qData.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-xl bg-white/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-center gap-3 text-xs sm:text-sm text-slate-700 dark:text-slate-200 font-medium";
+                btn.onclick = () => selectQuizOption(idx);
+                btn.innerHTML = `
+                    <span class="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-xs flex items-center justify-center shrink-0">${String.fromCharCode(65 + idx)}</span>
+                    <span>${opt}</span>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+
+            startQuizTimer();
+        }
+
+        function startQuizTimer() {
+            clearInterval(quizTimerInterval);
+            quizTimeLeft = 60;
+            document.getElementById('quiz-timer').innerText = quizTimeLeft + 's';
+
+            quizTimerInterval = setInterval(() => {
+                quizTimeLeft--;
+                document.getElementById('quiz-timer').innerText = quizTimeLeft + 's';
+
+                if (quizTimeLeft <= 0) {
+                    clearInterval(quizTimerInterval);
+                    playSound('wrong');
+                    showToast("Waktu Soal Habis! Lanjut ke soal berikutnya.", "warning");
+                    userQuizAnswers.push(-1); // Unanswered
+                    currentQuizIndex++;
+                    renderQuizQuestion();
+                }
+            }, 1000);
+        }
+
+        function selectQuizOption(optionIdx) {
+            playSound('click');
+            clearInterval(quizTimerInterval);
+            userQuizAnswers.push(optionIdx);
+
+            const correctIdx = currentQuizQuestions[currentQuizIndex].correct;
+            if (optionIdx === correctIdx) {
+                playSound('correct');
+            } else {
+                playSound('wrong');
+            }
+
+            currentQuizIndex++;
+            renderQuizQuestion();
+        }
+
+        function nextQuizQuestion() {
+            playSound('click');
+            clearInterval(quizTimerInterval);
+            userQuizAnswers.push(-1); // Skipped
+            currentQuizIndex++;
+            renderQuizQuestion();
+        }
+
+        function finishQuiz() {
+            clearInterval(quizTimerInterval);
+            document.getElementById('quiz-body-container').classList.add('hidden');
+            document.getElementById('quiz-summary-container').classList.remove('hidden');
+
+            // Calculate Score
+            let correctCount = 0;
+            currentQuizQuestions.forEach((q, idx) => {
+                if (userQuizAnswers[idx] === q.correct) correctCount++;
+            });
+
+            const finalScore = Math.round((correctCount / currentQuizQuestions.length) * 100);
+
+            document.getElementById('quiz-final-score').innerText = finalScore;
+            document.getElementById('quiz-score-detail').innerText = `Benar ${correctCount} dari ${currentQuizQuestions.length} Soal`;
+
+            if (activeQuizType === 'latihan') {
+                currentUser.latihanScore = finalScore;
+            } else {
+                currentUser.evalScore = finalScore;
+            }
+
+            updateDashboardStats();
+
+            if (finalScore >= 75) {
+                confetti();
+            }
+        }
+
+        /* ==========================================================================
+           8. DASHBOARD & UTILITY FUNCTIONS
+           ========================================================================== */
+        function updateDashboardStats() {
+            if (!currentUser) return;
+
+            // Calculate Overall Progress
+            let progressPoints = 0;
+            if (currentUser.gameScore > 0) progressPoints += 30;
+            if (currentUser.latihanScore !== null) progressPoints += 35;
+            if (currentUser.evalScore !== null) progressPoints += 35;
+
+            currentUser.progress = Math.min(100, progressPoints);
+            localStorage.setItem('pai_user_session', JSON.stringify(currentUser));
+
+            document.getElementById('dash-progress-percent').innerText = currentUser.progress + '%';
+            document.getElementById('dash-progress-bar').style.width = currentUser.progress + '%';
+            document.getElementById('global-progress-bar').style.width = currentUser.progress + '%';
+
+            document.getElementById('dash-game-score').innerHTML = `${currentUser.gameScore || 0} <span class="text-xs font-normal text-slate-400">/ 100 Poin</span>`;
+
+            if (currentUser.evalScore !== null) {
+                document.getElementById('dash-eval-score').innerText = currentUser.evalScore;
+                document.getElementById('dash-eval-status').innerText = currentUser.evalScore >= 75 ? "Tuntas (Lulus)" : "Perlu Remedial";
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+
+            let borderClass = "border-emerald-500 text-emerald-600 dark:text-emerald-400";
+            let icon = "fa-circle-info";
+
+            if (type === 'warning') {
+                borderClass = "border-amber-500 text-amber-600 dark:text-amber-400";
+                icon = "fa-triangle-exclamation";
+            } else if (type === 'danger') {
+                borderClass = "border-rose-500 text-rose-600 dark:text-rose-400";
+                icon = "fa-circle-xmark";
+            } else if (type === 'success') {
+                borderClass = "border-emerald-500 text-emerald-600 dark:text-emerald-400";
+                icon = "fa-circle-check";
+            }
+
+            toast.className = `glass-card p-3.5 rounded-xl border-l-4 ${borderClass} shadow-lg flex items-center gap-3 text-xs font-semibold text-slate-800 dark:text-white transition-all transform translate-y-4 opacity-0 pointer-events-auto`;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-base"></i> <span>${message}</span>`;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        function scrollToTop() {
+            playSound('click');
+            document.querySelector('main').scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show/Hide Scroll to Top Button
+        document.querySelector('main')?.addEventListener('scroll', function (e) {
+            const btn = document.getElementById('scroll-top-btn');
+            if (e.target.scrollTop > 300) {
+                btn.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                btn.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+
+        // Window Load Initialization
+        window.onload = function () {
+            checkSession();
+        };
+    </script>
+</body>
+</html>
